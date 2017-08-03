@@ -2,38 +2,49 @@ import React, { Component } from 'react';
 import {
     BrowserRouter as Router,
     Route,
-    Link
+    Link,
+    Switch
 } from 'react-router-dom';
+import Profile from '../Profile/Profile';
+import Profile2 from '../Profile2/Profile2';
 
 class Dashboard extends Component {
 
-    componentWillMount(){
+    constructor(props) {
+        super(props);
+        this.state = { };
+        const { match } = this.props;
+        this.baseUrl = match.url[match.url.length - 1] == '/' ? match.url : match.url + '/';
     }
 
+    componentWillMount(){
+        console.log(this.baseUrl);
+    }
+
+
     render(){
-        const { match, user } = this.props;
+        const { match } = this.props;
         return (
-            <div className=''>
-                <h3>dashboard</h3>
-                <Link to={`${match.url}/rendering`}>
-                    rendering
-                </Link>
-                <br/>
-                <Link to={`${match.url}/profile`}>
-                    profile
-                </Link>
-                <Route path={`${match.url}/:topicId`} component={Topic}/>
+            <div className='Dashboard'>
+                <Route
+                    path={ this.baseUrl }
+                    exact
+                    render={() => {
+                        return (
+                            <div>
+                                <div>baseUrl Dashboard</div>
+                                <Link to="/dashboard/main">main</Link><br/>
+                                <Link to="/dashboard/profile/edit">dashboard/profile/edit</Link><br/>
+                            </div>
+                        )
+                    }}
+                />
+                <Route path={`${match.url}/profile/edit`} component={Profile2}/>
+                <Route path={`${match.url}/main`} component={Profile}/>
             </div>
         );
     }
 }
 
-const Topic = ({ match }) => (
-    <div>
-        <h3>{match.params.topicId}</h3>
-        <br/>
-        <p>Loreipsum</p>
-    </div>
-);
 
 export default Dashboard;

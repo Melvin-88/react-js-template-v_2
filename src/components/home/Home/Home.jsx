@@ -8,20 +8,20 @@ import {
     BrowserRouter as Router,
     Route,
     Link,
-    NavLink
+    NavLink,
+    Switch
 } from 'react-router-dom'
 
 
 class Home extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-
-        };
-    }
+    state = {
+        dirty : '111'
+    };
 
     componentWillMount(){
         this.props.fetchUser()
+    }
+    componentDidMount(){
     }
 
     // componentWillReceiveProps(newProps){
@@ -37,38 +37,16 @@ class Home extends Component {
         console.log(this.props.user.blangs.results, match.url);
         return (
             <div className=''>
-              <div>main Page</div>
+                <div>main Page</div>
                 <br/>
                 <Link to="/">Home</Link>
                 <br/>
                 <Link to="/dashboard">Dashboard</Link>
                 <hr/>
-              <Router>
-                <div>
-                  <h2>Accounts</h2>
-                    <nav>
-                      <ul>
-                        <li><NavLink activeClassName={'active'} to="/netflix">Netflix</NavLink></li>
-                        <li><NavLink to="/zillow-group">Zillow Group</NavLink></li>
-                        <li><NavLink to="/yahoo">Yahoo</NavLink></li>
-                        <li><NavLink to="/modus-create">Modus Create</NavLink></li>
-                      </ul>
-                    </nav>
-                    <hr/>
-                  <Route path="/" component={Child}/>
-                  <Route path="/:id" component={Child}/>
-                </div>
-              </Router>
             </div>
         );
     }
 }
-
-const Child = ({ match }) => (
-    <div>
-      <h3>ID: {match.params.id}</h3>
-    </div>
-)
 
 function mapStateToProps(state) {
     return {
